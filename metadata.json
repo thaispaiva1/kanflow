@@ -1,0 +1,6 @@
+{
+  "name": "FunilVendas CRM & Dashboard",
+  "description": "Sistema completo de funil de vendas com quadro Kanban interativo, dashboard de métricas e conversão, autenticação e integração com Supabase.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
