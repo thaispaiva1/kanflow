@@ -218,53 +218,6 @@ export const LoginScreen: React.FC = () => {
                   )}
                 </button>
               </form>
-
-              {/* Acessos Rápidos de Perfil */}
-              <div className="pt-4 mt-5 border-t border-neutral-200 dark:border-neutral-800">
-                <span className="text-[11px] font-semibold text-neutral-500 dark:text-neutral-400 block mb-2 text-center">
-                  Acessos disponíveis (clique para selecionar):
-                </span>
-                <div className="grid grid-cols-3 gap-2">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setUsername('comercial');
-                      setPassword('comercial123');
-                      setError(null);
-                    }}
-                    className="p-2 rounded-xl border border-indigo-200 dark:border-indigo-800 bg-indigo-50/70 dark:bg-indigo-950/40 text-[11px] text-indigo-700 dark:text-indigo-300 hover:bg-indigo-100 dark:hover:bg-indigo-900/60 transition-colors text-center cursor-pointer"
-                  >
-                    <span className="font-bold block leading-tight">Comercial</span>
-                    <span className="text-[9px] text-neutral-500 dark:text-neutral-400 block mt-0.5">comercial</span>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setUsername('admin');
-                      setPassword('admin17');
-                      setError(null);
-                    }}
-                    className="p-2 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-neutral-100 dark:bg-neutral-800 text-[11px] text-neutral-700 dark:text-neutral-300 hover:bg-neutral-200 dark:hover:bg-neutral-700 transition-colors text-center cursor-pointer"
-                  >
-                    <span className="font-bold block leading-tight">Admin</span>
-                    <span className="text-[9px] text-neutral-500 dark:text-neutral-400 block mt-0.5">admin</span>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setUsername('funcionario');
-                      setPassword('func123');
-                      setError(null);
-                    }}
-                    className="p-2 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-neutral-100 dark:bg-neutral-800 text-[11px] text-neutral-700 dark:text-neutral-300 hover:bg-neutral-200 dark:hover:bg-neutral-700 transition-colors text-center cursor-pointer"
-                  >
-                    <span className="font-bold block leading-tight">Funcionário</span>
-                    <span className="text-[9px] text-neutral-500 dark:text-neutral-400 block mt-0.5">funcionario</span>
-                  </button>
-                </div>
-              </div>
             </div>
           ) : (
             /* ========================================================= */
