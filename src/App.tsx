@@ -26,10 +26,9 @@ import {
   createSupplier,
   updateSupplier,
   deleteSupplier,
-  getSavedSupabaseConfig,
   purgeMockData 
 } from './services/supabaseService';
-import { AlertCircle, CheckCircle2, Settings } from 'lucide-react';
+import { AlertCircle, CheckCircle2 } from 'lucide-react';
 
 function CRMContent() {
   const { isAuthenticated, isAdmin, isCommercial } = useAuth();
@@ -42,18 +41,11 @@ function CRMContent() {
   const [isDealModalOpen, setIsDealModalOpen] = useState(false);
   const [dealToEdit, setDealToEdit] = useState<Deal | null>(null);
   const [initialStageForNewDeal, setInitialStageForNewDeal] = useState('prospecting');
-  const [supabaseConnected, setSupabaseConnected] = useState(false);
   const [toastMessage, setToastMessage] = useState<{ text: string; type: 'success' | 'info' } | null>(null);
 
   // Sidebar collapse & mobile drawer state
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
-
-  // Check Supabase connection config
-  const refreshSupabaseStatus = useCallback(() => {
-    const config = getSavedSupabaseConfig();
-    setSupabaseConnected(config.isConnected);
-  }, []);
 
   // Fetch deals and suppliers
   const loadData = useCallback(async () => {
@@ -74,9 +66,8 @@ function CRMContent() {
 
   useEffect(() => {
     purgeMockData();
-    refreshSupabaseStatus();
     loadData();
-  }, [loadData, refreshSupabaseStatus]);
+  }, [loadData]);
 
   const showToast = (text: string, type: 'success' | 'info' = 'success') => {
     setToastMessage({ text, type });
@@ -216,7 +207,6 @@ function CRMContent() {
         setCurrentTab={setCurrentTab}
         onOpenNewDeal={handleOpenNewDeal}
         onOpenAdminSettings={() => setIsAdminSettingsOpen(true)}
-        isSupabaseConnected={supabaseConnected}
         dealsCount={deals.length}
         suppliersCount={suppliers.length}
         isCollapsed={isSidebarCollapsed}
@@ -235,28 +225,7 @@ function CRMContent() {
           onOpenNewDeal={handleOpenNewDeal}
           onOpenAdminSettings={() => setIsAdminSettingsOpen(true)}
           onToggleMobileSidebar={() => setIsMobileSidebarOpen(true)}
-          isSupabaseConnected={supabaseConnected}
         />
-
-        {/* Database connection banner if in local mode (visible only to admin) */}
-        {!supabaseConnected && isAdmin && (
-          <div className="bg-amber-500/10 dark:bg-amber-500/15 border-b border-amber-500/20 px-4 py-2 text-xs text-amber-800 dark:text-amber-300">
-            <div className="max-w-7xl mx-auto flex items-center justify-between gap-3">
-              <div className="flex items-center gap-2">
-                <Settings className="w-4 h-4 shrink-0 text-amber-600 dark:text-amber-400" />
-                <span>
-                  <strong>Modo Armazenamento Local Ativo:</strong> Seus leads e fornecedores estão salvos no navegador. Deseja conectar o banco Supabase?
-                </span>
-              </div>
-              <button
-                onClick={() => setIsAdminSettingsOpen(true)}
-                className="font-semibold underline hover:text-amber-900 dark:hover:text-amber-200 cursor-pointer shrink-0"
-              >
-                Configurar Supabase &gt;
-              </button>
-            </div>
-          </div>
-        )}
 
         {/* Content Area */}
         <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
@@ -327,15 +296,11 @@ function CRMContent() {
         companies={suppliers}
       />
 
-      {/* Admin Settings Modal (Supabase & User Accounts Management) */}
+      {/* Modal de Gerenciamento de Usuários e Acessos */}
       {isAdmin && (
         <AdminSettingsModal
           isOpen={isAdminSettingsOpen}
           onClose={() => setIsAdminSettingsOpen(false)}
-          onConfigChanged={() => {
-            refreshSupabaseStatus();
-            loadData();
-          }}
         />
       )}
     </div>

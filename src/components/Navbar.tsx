@@ -16,15 +16,14 @@ interface NavbarProps {
   onOpenNewDeal: () => void;
   onOpenAdminSettings: () => void;
   onToggleMobileSidebar: () => void;
-  isSupabaseConnected: boolean;
+  isSupabaseConnected?: boolean;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
   currentTab,
   onOpenNewDeal,
   onOpenAdminSettings,
-  onToggleMobileSidebar,
-  isSupabaseConnected
+  onToggleMobileSidebar
 }) => {
   const { user, isAdmin, isCommercial, logout } = useAuth();
   const { theme, toggleTheme } = useTheme();
@@ -75,7 +74,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         {/* Right: Quick Actions */}
         <div className="flex items-center gap-2 sm:gap-3">
           {/* New Deal Button - Exclusivo para Comercial */}
-          {isCommercial ? (
+          {isCommercial && (
             <button
               onClick={onOpenNewDeal}
               className="flex items-center gap-1.5 py-1.5 px-3.5 text-xs font-semibold rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white shadow-sm hover:shadow transition-all cursor-pointer whitespace-nowrap"
@@ -84,10 +83,6 @@ export const Navbar: React.FC<NavbarProps> = ({
               <span className="hidden sm:inline">Nova Oportunidade</span>
               <span className="sm:hidden">Novo</span>
             </button>
-          ) : (
-            <span className="hidden sm:inline-flex items-center px-2.5 py-1 text-[11px] font-semibold rounded-lg bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-400 border border-neutral-200 dark:border-neutral-700">
-              Modo Gestão (Admin)
-            </span>
           )}
 
           {/* Theme Toggle */}

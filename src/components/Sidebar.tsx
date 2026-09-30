@@ -12,9 +12,9 @@ import {
   User, 
   ChevronLeft, 
   ChevronRight,
-  Database,
   Sun,
-  Moon
+  Moon,
+  Users
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -22,7 +22,7 @@ interface SidebarProps {
   setCurrentTab: (tab: 'kanban' | 'dashboard' | 'suppliers') => void;
   onOpenNewDeal: () => void;
   onOpenAdminSettings: () => void;
-  isSupabaseConnected: boolean;
+  isSupabaseConnected?: boolean;
   dealsCount: number;
   suppliersCount: number;
   isCollapsed: boolean;
@@ -36,7 +36,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
   setCurrentTab,
   onOpenNewDeal,
   onOpenAdminSettings,
-  isSupabaseConnected,
   dealsCount,
   suppliersCount,
   isCollapsed,
@@ -168,27 +167,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
           })}
         </div>
 
-        {/* Database & Admin Status Footer */}
+        {/* Admin & Profile Footer */}
         <div className="p-3 border-t border-neutral-200 dark:border-neutral-800 space-y-2">
-          {/* Status Badge - Visível EXCLUSIVAMENTE para administradores */}
-          {isAdmin && (
-            (!isCollapsed || isMobileOpen) ? (
-              <div className="px-3 py-2 rounded-xl bg-neutral-50 dark:bg-neutral-800/50 border border-neutral-200 dark:border-neutral-800 flex items-center justify-between text-[11px]">
-                <div className="flex items-center gap-2 truncate">
-                  <span className={`w-2 h-2 rounded-full shrink-0 ${isSupabaseConnected ? 'bg-emerald-500 animate-pulse' : 'bg-amber-500'}`} />
-                  <span className="text-neutral-600 dark:text-neutral-300 truncate font-medium">
-                    {isSupabaseConnected ? 'Supabase Conectado' : 'Modo Banco Local'}
-                  </span>
-                </div>
-                <Database className="w-3.5 h-3.5 text-neutral-400 shrink-0" />
-              </div>
-            ) : (
-              <div className="flex justify-center py-1" title={isSupabaseConnected ? 'Supabase Conectado' : 'Modo Banco Local'}>
-                <span className={`w-2.5 h-2.5 rounded-full ${isSupabaseConnected ? 'bg-emerald-500 animate-pulse' : 'bg-amber-500'}`} />
-              </div>
-            )
-          )}
-
           {/* Admin Settings Button */}
           {isAdmin && (
             <button
@@ -199,10 +179,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
               className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors cursor-pointer group ${
                 isCollapsed && !isMobileOpen ? 'justify-center px-0' : ''
               }`}
-              title="Configurações do Gerenciador (Supabase e Logins)"
+              title="Gerenciamento de Usuários e Acessos"
             >
-              <Settings className="w-4 h-4 text-indigo-600 dark:text-indigo-400 group-hover:rotate-45 transition-transform duration-300 shrink-0" />
-              {(!isCollapsed || isMobileOpen) && <span>Configurações</span>}
+              <Users className="w-4 h-4 text-indigo-600 dark:text-indigo-400 group-hover:scale-110 transition-transform duration-200 shrink-0" />
+              {(!isCollapsed || isMobileOpen) && <span>Gerenciar Usuários</span>}
             </button>
           )}
 
